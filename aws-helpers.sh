@@ -1,6 +1,11 @@
 #!/bin/bash
 
-# Some helpers for getting an MFA token locally from AWS
+# Some AWS-related helpers
+
+# 1: The pem file to check
+get-aws-fingerprint(){
+    openssl pkcs8 -in $1 -nocrypt -topk8 -outform DER | openssl sha1 -c
+}
 
 # 1: Your AWS profile designating the desired account so you don't mix them up
 # 2: The MFA token (123456) from your MFA authenticator
