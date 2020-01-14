@@ -47,3 +47,18 @@ set-mfa-token(){
 
     echo 'Successfully assigned AWS variables'
 }
+
+# Gets the binary secret, decodes it, and outputs it to a file
+# 1: The secret ID
+# 2: Optional output file
+get-binary-secret(){
+  SECRET_JSON=$(aws secretsmanager get-secret-value --secret-id $1)
+  SECRET_BINARY=$(jq .SecretBinary <<< $SECRET_JSON -r)
+  DECODED_BINARY=$(echo "$SECRET_BINARY" | base64 -D)
+
+  if [ -z "$2"  ]; then
+      echo "$DECODED_BINARY"
+  else
+      echo "$DECODED_BINARY" > $2
+  fi
+}
