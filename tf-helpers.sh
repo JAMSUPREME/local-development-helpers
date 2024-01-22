@@ -3,8 +3,16 @@
 # You can either run them from the project root or from the /terraform directory
 #
 
+# Profiles should follow this convention:
+# myproj_dev
+# myproj_qa
+# myproj_qa_nongov (when using gov/nongov, it is assumed that GovCloud is your "default")
+#    The helper should still work as long as you consistently invert this and Commercial is your default
 export ACTIVE_TF_PROFILE='unknown'
+
+# Default version of TF to use (can be "terraform")
 export ACTIVE_TF=terraform@1.2.9
+
 # If you have several projects, this is useful to set the correct prefix
 tfprofile(){
   export ACTIVE_TF_PROFILE=$1
